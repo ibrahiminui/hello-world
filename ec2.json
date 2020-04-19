@@ -1,42 +1,33 @@
 {
-	"AWSTemplateFormatVersion": "2010-09-09",
+  "AWSTemplateFormatVersion": "2010-09-09",
 
-	"Description": "\"AWS CloudFormation Sample Template.",
-	"Resources": {
-		"EC2Instance": {
-			"Type": "AWS::EC2::Instance",
-			"Properties": {
-				"AvailabilityZone": "us-east-1a",
-				"ImageId": "ami-076b1b7bde512698c",
-				"InstanceType": "t2.micro",
-				"KeyName": "CloudtierWebServerLC",
-				"NetworkInterfaces": [{
-					"AssociatePublicIpAddress": true,
-					"DeleteOnTermination": true,
-					"DeviceIndex": "0",
-					"SubnetId": "subnet-059bb2e4f48425b34",
-					"GroupSet": [
-						"sg-0941596b98492e7b6"
-					]
-				}]
-			}
-		}
-	},
-	"Outputs": {
-		"WebsiteURL": {
-			"Value": {
-				"Fn::Join": [
-					"",
-					[
-						"http://",
-						{
-							"Fn::GetAtt": ["EC2Instance", "PublicDnsName"]
-						},
-						"/wordpress"
-					]
-				]
-			},
-			"Description": "WordPress Website"
-		}
-	}
+  "Description": "\"AWS CloudFormation Sample Template.",
+  "Resources": {
+    "EC2Instance": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "AvailabilityZone": "us-east-1b",
+        "ImageId": "ami-076b1b7bde512698c",
+        "InstanceType": "t2.micro",
+        "KeyName": "CloudtierWebServerLC",
+        "SecurityGroupIds": [ "sg-0941596b98492e7b6" ],
+        "SubnetId": "subnet-059bb2e4f48425b34"
+      }
+    }
+  },
+  "Outputs": {
+    "WebsiteURL": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "http://",
+            { "Fn::GetAtt": [ "EC2Instance", "PublicDnsName" ] },
+            "/wordpress"
+          ]
+        ]
+      },
+      "Description": "WordPress Website"
+    }
+  }
 }
